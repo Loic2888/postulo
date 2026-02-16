@@ -43,8 +43,8 @@ async fn process_offer(url: String) -> Result<AnalysisResult, String> {
     let job_text = body.chars().take(5000).collect::<String>();
 
     // 2. Read User CV (Template)
-    let cv_path = PathBuf::from("../..").join("index.html");
-    let cv_content = fs::read_to_string(cv_path).map_err(|_| "CV (index.html) non trouvé dans le dossier parent (CV/).".to_string())?;
+    let cv_path = PathBuf::from("..").join("cv-template.html");
+    let cv_content = fs::read_to_string(cv_path).map_err(|_| "CV (cv-template.html) non trouvé.".to_string())?;
 
     // 3. Groq AI Call
     let today = Local::now().format("%d/%m/%Y").to_string();
@@ -147,8 +147,8 @@ fn html_to_pdf(html: &str) -> Result<String, String> {
 
 #[tauri::command]
 async fn generate_pdfs(result: AnalysisResult, url: String) -> Result<serde_json::Value, String> {
-    let cv_html_path = PathBuf::from("../..").join("index.html");
-    let cv_css_path = PathBuf::from("../..").join("style.css");
+    let cv_html_path = PathBuf::from("..").join("cv-template.html");
+    let cv_css_path = PathBuf::from("..").join("cv-template.css");
     let original_cv = fs::read_to_string(cv_html_path).map_err(|e| e.to_string())?;
     let css = fs::read_to_string(cv_css_path).map_err(|e| e.to_string())?;
 
@@ -176,7 +176,7 @@ async fn generate_pdfs(result: AnalysisResult, url: String) -> Result<serde_json
     adapted_cv = adapted_cv.replace("<link rel=\"stylesheet\" href=\"style.css\">", &format!("<style>{}</style>", css));
     
     // Fix Image (Embed as Base64 for maximum reliability)
-    let photo_path = PathBuf::from("../..").join("Profil_ai1.jpg");
+    let photo_path = PathBuf::from("..").join("cv-photo.jpg");
     if let Ok(photo_bytes) = fs::read(photo_path) {
         let b64 = general_purpose::STANDARD.encode(photo_bytes);
         adapted_cv = adapted_cv.replace("src=\"Profil_ai1.jpg\"", &format!("src=\"data:image/jpeg;base64,{}\"", b64));

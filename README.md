@@ -80,9 +80,9 @@ Postulo generates three high-quality PDF documents for every application:
 
 4.  **CV Template Configuration**
     Postulo uses your original CV files at the root of the project to generate the new ones. Ensure you have:
-    - `index.html`: Your HTML CV template.
-    - `style.css`: The associated stylesheet.
-    - `Profil_ai1.jpg`: Your profile picture.
+    - `cv-template.html`: Your HTML CV template.
+    - `cv-template.css`: The associated stylesheet.
+    - `cv-photo.jpg`: Your profile picture.
 
 ---
 
