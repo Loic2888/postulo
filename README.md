@@ -19,18 +19,17 @@
 
 ## 📄 Automated Document Generation
 
-Postulo generates three high-quality PDF documents for every application:
+Postulo generates three high-quality PDF documents for every application based on **customizable HTML/CSS templates**:
 
 1.  **📊 Company & Job Summary**:
-    - A concise 2-3 sentence overview of the company culture and the job requirements.
-    - Helps you prepare for interviews and understand the employer's priorities.
+    - A concise overview of the company culture and the job requirements.
 2.  **✉️ Tailored Cover Letter**:
-    - A professional letter structured according to industry standards (You/Me/Us).
-    - Fully personalized to match the specific job description while highlighting your relevant experience.
-    - Includes proper headers with current date and contact info.
+    - A professional letter generated from a **flexible HTML template** (`public/lettre.html`).
+    - Styled with **CSS** (`public/lettre-style.css`) to match your personal branding.
+    - AI-generated content is automatically injected into the template while respecting a professional single-page layout.
 3.  **📄 Adapted CV**:
-    - Your original CV (`index.html`) automatically updated with a **new title** specifically optimized for the job offer you're applying for.
-    - Ensures your profile catches the eye of Recruiters/ATS (Applicant Tracking Systems) immediately.
+    - Your original **HTML CV** (`public/cv.html`) automatically updated with a job-optimized title.
+    - Uses a dedicated **CSS stylesheet** (`public/cv-style.css`) for consistent rendering.
 
 ---
 
@@ -78,11 +77,11 @@ Postulo generates three high-quality PDF documents for every application:
     GROQ_API_KEY=your_groq_api_key_here
     ```
 
-4.  **CV Template Configuration**
-    Postulo uses your original CV files at the root of the project to generate the new ones. Ensure you have:
-    - `cv-template.html`: Your HTML CV template.
-    - `cv-template.css`: The associated stylesheet.
-    - `cv-photo.jpg`: Your profile picture.
+4.  **Template Configuration (HTML/CSS)**
+    Postulo uses HTML and CSS templates located in the `public/` folder to generate your documents. You can customize them to match your own style:
+    - `public/cv.html` & `public/cv-style.css`: Your CV template and styles.
+    - `public/lettre.html` & `public/lettre-style.css`: Your cover letter template and styles.
+    - `public/Profil_ai1.jpg`: Your profile picture (automatically embedded in both).
 
 ---
 
@@ -105,14 +104,15 @@ Once opened:
 
 ```text
 .
+├── public/             # Static assets & Templates
+│   ├── cv.html         # CV Template
+│   ├── cv-style.css    # CV Styling
+│   ├── lettre.html     # Cover Letter Template
+│   └── lettre-style.css# Cover Letter Styling
 ├── src/                # Frontend source (React + TS)
-├── src-tauri/        # Backend source (Rust)
-│   ├── src/main.rs     # Rust entry point
-│   ├── src/lib.rs      # Command logic (Scraping, IA, PDF)
-│   └── .env            # Private variables (IGNORED)
-├── index.html          # Source CV template
-├── style.css           # Source CV style
-└── package.json        # Node.js dependencies
+├── src-tauri/          # Backend source (Rust)
+├── package.json        # Node.js dependencies
+└── README.md
 ```
 
 ---
