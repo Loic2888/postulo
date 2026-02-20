@@ -1,0 +1,200 @@
+:root {
+    --primary-bg: #ffffff;
+    --sidebar-bg: #f9f5ff;
+    --accent-color: #9333ea;
+    --accent-light: #e9d5ff;
+    --accent-dark: #6b21a8;
+    --text-main: #1a1a1f;
+    --text-dim: #4b5563;
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f0f5;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+}
+
+.cv-wrapper {
+    max-width: 210mm;
+    margin: 0 auto;
+    position: relative;
+    background-color: white;
+    min-height: 297mm;
+    /* A4 Height */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* MATRIX BACKGROUND (Copied from CV) */
+.cv-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='300' viewBox='0 0 120 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E .b %7B font-family: monospace; font-size: 10px; fill: %239333ea; opacity: 0.2; writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 3px; %7D %3C/style%3E%3Ctext x='10' y='5' class='b'%3E1010110101101011010110%3C/text%3E%3Ctext x='30' y='40' class='b'%3E01101101101011%3C/text%3E%3Ctext x='50' y='10' class='b'%3E110010111001011100%3C/text%3E%3Ctext x='70' y='60' class='b'%3E01011010%3C/text%3E%3Ctext x='90' y='5' class='b'%3E101110101101110101101110101%3C/text%3E%3Ctext x='110' y='30' class='b'%3E011011010110%3C/text%3E%3C/svg%3E");
+    background-repeat: repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.letter-content {
+    position: relative;
+    z-index: 10;
+    padding: 25px 40px;
+    /* Reduced top/bottom padding */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Changed to flex-start for text alignment */
+    border-bottom: 2px solid var(--accent-light);
+    padding-bottom: 10px;
+    /* Reduced from 15px */
+    margin-bottom: 20px;
+    /* Reduced from 25px */
+}
+
+.header-text h1 {
+    font-size: 2rem;
+    /* Sligthly smaller */
+    font-weight: 700;
+    color: var(--accent-dark);
+    line-height: 1.1;
+    margin-bottom: 2px;
+}
+
+.header-text h2 {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.contact-info {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    font-size: 0.8rem;
+    /* Smaller font */
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+}
+
+/* Photo removed */
+
+/* BODY */
+.recipient-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    /* Reduced from 40px */
+}
+
+.date {
+    font-family: var(--font-mono);
+    color: var(--accent-dark);
+    /* Made darker/colored */
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.recipient-info {
+    text-align: right;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--accent-light);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.object-line {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent-dark);
+    margin-bottom: 20px;
+    /* Reduced from 30px */
+    font-family: var(--font-mono);
+    padding-left: 15px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.content {
+    font-size: 0.95rem;
+    /* Slightly smaller font */
+    text-align: justify;
+    /* Justified alignment */
+    margin-bottom: 20px;
+    white-space: normal;
+    /* Collapses indentation, keeps newlines */
+
+    /* Frame/Border around content */
+    border: 1px solid var(--accent-light);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+/* Paragraph spacing in content */
+.content p {
+    margin-bottom: 10px;
+}
+
+.signature {
+    margin-top: auto;
+    text-align: right;
+    padding-right: 40px;
+    padding-bottom: 10px;
+}
+
+.sig-name {
+    font-weight: 700;
+    color: var(--accent-dark);
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-family: var(--font-mono);
+}
+
+/* PRINT OPTIMIZATION */
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .cv-wrapper {
+        width: 210mm;
+        height: 297mm;
+        box-shadow: none;
+    }
+}

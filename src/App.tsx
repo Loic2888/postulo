@@ -105,7 +105,7 @@ function App() {
         <div className="results-grid fade-in">
           <div className="doc-card glass" onClick={() => downloadPdf(pdfs.summary, `Resume_${results.company_name}.pdf`)}>
             <div className="icon">📋</div>
-            <h3>Résumé</h3>
+            <h3>Résumé + Offre</h3>
             <button className="dl-btn">Télécharger</button>
           </div>
 
