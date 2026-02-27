@@ -28,8 +28,8 @@ Postulo generates three high-quality PDF documents for every application based o
     - Styled with **CSS** (`public/lettre-style.css`) to match your personal branding.
     - AI-generated content is automatically injected into the template while respecting a professional single-page layout.
 3.  **📄 Adapted CV**:
-    - Your original **HTML CV** (`public/cv.html`) automatically updated with a job-optimized title.
-    - Uses a dedicated **CSS stylesheet** (`public/cv-style.css`) for consistent rendering.
+    - Your original **HTML CV** (`index.html`) automatically updated with a job-optimized title.
+    - Uses the root **CSS stylesheet** (`style.css`) for consistent rendering.
 
 ---
 
@@ -78,8 +78,8 @@ Postulo generates three high-quality PDF documents for every application based o
     ```
 
 4.  **Template Configuration (HTML/CSS)**
-    Postulo uses HTML and CSS templates located in the `public/` folder to generate your documents. You can customize them to match your own style:
-    - `public/cv.html` & `public/cv-style.css`: Your CV template and styles.
+    Postulo uses its parent's root HTML and CSS as the master templates to generate your documents:
+    - `index.html` & `style.css`: Your main CV template and styles (at the project root).
     - `public/lettre.html` & `public/lettre-style.css`: Your cover letter template and styles.
     - `public/Profil_ai1.jpg`: Your profile picture (automatically embedded in both).
 
@@ -104,14 +104,15 @@ Once opened:
 
 ```text
 .
-├── public/             # Static assets & Templates
-│   ├── cv.html         # CV Template
-│   ├── cv-style.css    # CV Styling
-│   ├── lettre.html     # Cover Letter Template
-│   └── lettre-style.css# Cover Letter Styling
-├── src/                # Frontend source (React + TS)
-├── src-tauri/          # Backend source (Rust)
-├── package.json        # Node.js dependencies
+├── index.html          # CV Master Template (Root)
+├── style.css           # CV Master Styling (Root)
+├── postulo/            # Native Application
+│   ├── src-tauri/      # Backend (Rust Logic)
+│   ├── public/         # Letter Templates & Assets
+│   │   ├── lettre.html
+│   │   └── lettre-style.css
+│   ├── src/            # Frontend (React)
+│   └── package.json
 └── README.md
 ```
 

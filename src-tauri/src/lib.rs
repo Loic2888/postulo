@@ -46,8 +46,8 @@ async fn process_offer(url: String) -> Result<AnalysisResult, String> {
     println!("DEBUG: Contenu de la page (500 chars): {}", job_text.chars().take(500).collect::<String>());
 
     // 2. Read User CV (Template)
-    let cv_path = PathBuf::from("..").join("public").join("cv.html");
-    let cv_content = fs::read_to_string(cv_path).map_err(|_| "CV (cv-template.html) non trouvé.".to_string())?;
+    let cv_path = PathBuf::from("..").join("..").join("index.html");
+    let cv_content = fs::read_to_string(cv_path).map_err(|_| "CV (index.html) non trouvé.".to_string())?;
 
     // 3. Groq AI Call
     
@@ -60,7 +60,8 @@ async fn process_offer(url: String) -> Result<AnalysisResult, String> {
 
         [VOUS : Analyse des besoins de l'entreprise basés sur l'offre. Montrez que vous comprenez leurs défis techniques ou business.]
 
-        [MOI : Focus sur votre parcours à Holberton School (approche peer-learning, projets intensifs). Mentionnez vos compétences techniques (JS, Python, Rust, etc.) et vos projets personnels comme votre plateforme de cybersécurité (whooami.net). Faites le lien direct avec l'offre.]
+        [MOI : Focus sur votre parcours à Holberton School (approche peer-learning, projets intensifs). Mentionnez vos compétences techniques (JS, Python, Rust, etc.) et vos projets personnels comme votre plateforme de cybersécurité (whooami.net). 
+        IMPORTANT : Ne mentez JAMAIS sur mon expérience passée. Si mon CV ne mentionne pas d'expérience en 'Support' ou 'Exploitation', ne l'inventez pas. Présentez-moi comme un profil passionné en pleine formation/reconversion qui s'appuie sur ses projets et sa capacité d'apprentissage rapide (Holberton) pour répondre aux besoins du poste. Utilisez mes expériences passées (restauration, logistique) pour souligner mes soft-skills (sens du service, rigueur, gestion du stress) sans prétendre qu'elles étaient techniques.]
 
         [NOUS : Projection de votre collaboration. Ce que votre curiosité et votre capacité d'apprentissage rapide apporteront à l'équipe. Votre motivation pour ce contrat d'apprentissage/alternance.]
 
@@ -84,6 +85,7 @@ async fn process_offer(url: String) -> Result<AnalysisResult, String> {
            - Sois dense, professionnel et enthousiaste.
            - Ne fais pas de remplissage inutile, chaque phrase doit apporter de la valeur.
            - Sépare BIEN les paragraphes par une double ligne vide (\n\n) pour qu'ils soient lisibles.
+           - INTERDICTION DE MENTIR : Si mon CV ne mentionne pas d'expérience en 'Support' ou 'Exploitation', ne dites pas que j'en ai acquis au cours de mes précédents postes. Dites plutôt que ma formation et mes projets m'ont préparé à ces missions.
         ---
         5. Propose un titre pour mon CV (new_cv_title).
            IMPORTANT : Ce titre doit être court et générique (ex: 'Assistant Informatique', 'Développeur Web'). 
@@ -154,8 +156,8 @@ fn html_to_pdf(html: &str) -> Result<String, String> {
 
 #[tauri::command]
 async fn generate_pdfs(result: AnalysisResult, url: String) -> Result<serde_json::Value, String> {
-    let cv_html_path = PathBuf::from("..").join("public").join("cv.html");
-    let cv_css_path = PathBuf::from("..").join("public").join("cv-style.css");
+    let cv_html_path = PathBuf::from("..").join("..").join("index.html");
+    let cv_css_path = PathBuf::from("..").join("..").join("style.css");
     let original_cv = fs::read_to_string(cv_html_path).map_err(|e| e.to_string())?;
     let css = fs::read_to_string(cv_css_path).map_err(|e| e.to_string())?;
 
@@ -192,7 +194,7 @@ async fn generate_pdfs(result: AnalysisResult, url: String) -> Result<serde_json
     let today = Local::now().format("%d/%m/%Y").to_string();
 
     // Prepare Photo Base64
-    let photo_path = PathBuf::from("..").join("public").join("Profil_ai1.jpg");
+    let photo_path = PathBuf::from("..").join("..").join("Profil_ai1.jpg");
     let photo_data = if let Ok(photo_bytes) = fs::read(photo_path) {
         format!("data:image/jpeg;base64,{}", general_purpose::STANDARD.encode(photo_bytes))
     } else {
@@ -231,11 +233,11 @@ async fn generate_pdfs(result: AnalysisResult, url: String) -> Result<serde_json
         &format!("<h2 id=\"user-title\" contenteditable=\"true\">{}</h2>", result.new_cv_title.to_uppercase())
     );
     
-    // Inject CSS
-    adapted_cv = adapted_cv.replace("<link rel=\"stylesheet\" href=\"cv-style.css\">", &format!("<style>{}</style>", css));
+    // Inject CSS - Search for the root style.css link
+    adapted_cv = adapted_cv.replace("<link rel=\"stylesheet\" href=\"style.css\">", &format!("<style>{}</style>", css));
     
     // Fix Image (Embed as Base64 for maximum reliability)
-    let photo_path = PathBuf::from("..").join("public").join("Profil_ai1.jpg");
+    let photo_path = PathBuf::from("..").join("..").join("Profil_ai1.jpg");
     if let Ok(photo_bytes) = fs::read(photo_path) {
         let b64 = general_purpose::STANDARD.encode(photo_bytes);
         adapted_cv = adapted_cv.replace("src=\"Profil_ai1.jpg\"", &format!("src=\"data:image/jpeg;base64,{}\"", b64));
